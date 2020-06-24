@@ -1,6 +1,6 @@
 # ConfirmDialog
 
-![alt text](https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png)
+![alt text](https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png =250x250)
 
 ### Create Confirm Dialog
 ```java
