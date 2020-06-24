@@ -1,9 +1,9 @@
 # ConfirmDialog
 
-![alt text](https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png =250x250)
-![](https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png| width=48)
+<img src="https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png" width="500">
 
-### Create Confirm Dialog
+### How To Create Confirm Dialog ?
+
 ```java
       ConfirmDialog dialog = new ConfirmDialog.Builder("Are you sure to delete item ?")
               .setTextNegativeButton("Cancel")
