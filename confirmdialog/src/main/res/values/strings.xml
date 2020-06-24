@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ConfirmDialog</string>
+    <string name="cancel">cancel</string>
+    <string name="verify">verify</string>
+</resources>

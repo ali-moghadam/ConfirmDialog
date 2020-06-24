@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/confirm_dialog_guideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/confirm_dialog_guideLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/confirm_dialog_guideLine3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/confirm_dialog_guideLine4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/confirm_dialog_imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/confirm_dialog_title"
+        app:layout_constraintLeft_toRightOf="@+id/confirm_dialog_guideLine3"
+        app:layout_constraintRight_toRightOf="@id/confirm_dialog_guideLine4"
+        app:layout_constraintTop_toTopOf="@+id/confirm_dialog_title"
+        app:srcCompat="@android:drawable/stat_sys_warning"
+        app:tint="@color/blue" />
+
+    <TextView
+        android:id="@+id/confirm_dialog_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="@+id/confirm_dialog_guideLine2"
+        app:layout_constraintRight_toRightOf="@+id/confirm_dialog_guideLine3"
+        android:gravity="center"
+        tools:text="Delete"
+        android:textSize="17sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/confirm_dialog_subTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        app:layout_constraintLeft_toLeftOf="@+id/confirm_dialog_guideLine1"
+        app:layout_constraintRight_toRightOf="@+id/confirm_dialog_guideLine4"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_dialog_title"
+        tools:text="Dialog body text" />
+
+
+    <Button
+        android:id="@+id/confirm_dialog_button_positive"
+        style="@style/button_primary_flat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="22dp"
+        android:gravity="center"
+        android:text="@string/verify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/confirm_dialog_button_negative"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_dialog_subTitle" />
+
+    <Button
+        android:id="@+id/confirm_dialog_button_negative"
+        style="@style/button_disable_flat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/confirm_dialog_button_positive"
+        app:layout_constraintTop_toTopOf="@+id/confirm_dialog_button_positive" />
+
+
+    <View
+        android:id="@+id/confirm_dialog_line"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/confirm_dialog_button_positive"
+        app:layout_constraintLeft_toRightOf="@+id/confirm_dialog_button_negative"
+        app:layout_constraintRight_toLeftOf="@+id/confirm_dialog_button_positive"
+        app:layout_constraintTop_toTopOf="@+id/confirm_dialog_button_positive" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
