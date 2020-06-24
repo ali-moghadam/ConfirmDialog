@@ -1,5 +1,6 @@
 # ConfirmDialog
-customized confirm dialog library
+
+![alt text](https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png)
 
 ### Create Confirm Dialog
 ```java
