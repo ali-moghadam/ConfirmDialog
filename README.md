@@ -2,7 +2,29 @@
 
 <img src="https://raw.githubusercontent.com/alipapital/ConfirmDialog/master/files/confirm_dialog.png" width="500">
 
-### How To Create Confirm Dialog ?
+
+#### Step 1. Add the JitPack repository to your build file
+```gradle	
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+<br />
+
+#### Step 2. Add the dependency
+```gradle	
+	dependencies {
+	         implementation 'com.github.alipapital:ConfirmDialog:1.0'
+	}
+```
+
+<br />
+
+#### Step 3. Create Confirm Dialog
 
 ```java
       ConfirmDialog dialog = new ConfirmDialog.Builder("Are you sure to delete item ?")
@@ -31,3 +53,11 @@
               }).build();
 
       dialog.show(getSupportFragmentManager(), null);
+```
+           
+<br />  
+ 
+#### How to close Confirm Dialog ?
+```
+      dialog.dismiss();
+```
