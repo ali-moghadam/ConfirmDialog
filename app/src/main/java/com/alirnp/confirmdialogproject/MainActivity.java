@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
               .setNegativeButtonListener(new OnClickListener() {
                  @Override
                  public void onClick(DialogFragment dialog, View view) {
+                    Toast.makeText(MainActivity.this, "Negative Button Clicked", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                  }
               }).build();
