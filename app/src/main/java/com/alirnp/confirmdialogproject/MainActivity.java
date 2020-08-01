@@ -13,6 +13,9 @@ import androidx.fragment.app.DialogFragment;
 import com.alirnp.confirmdialog.ConfirmDialog;
 import com.alirnp.confirmdialog.OnClickListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,14 +28,26 @@ public class MainActivity extends AppCompatActivity {
       button.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            openDialog();
+
+            new Timer().schedule(new TimerTask() {
+               @Override
+               public void run() {
+                  runOnUiThread(new Runnable() {
+                     @Override
+                     public void run() {
+                        openDialog();
+                     }
+                  });
+               }
+            }, 5000);
+
          }
       });
    }
 
    private void openDialog() {
-      ConfirmDialog dialog = new ConfirmDialog.Builder("Are you sure to delete item ?")
-              .setTextNegativeButton("Cancel")
+      ConfirmDialog dialog = new ConfirmDialog.Builder(this, "Are you sure to delete item ?")
+
               .setTypeface(Typeface.SANS_SERIF)
               .setColorPositiveButton(getResources().getColor(R.color.colorPrimary))
               .setColorNegativeButton(getResources().getColor(R.color.gray))
@@ -43,20 +58,27 @@ public class MainActivity extends AppCompatActivity {
               .setIcon(R.drawable.ic_alert)
               .setIconColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
               .setMessageBody("For more information about this library, read the document in github.")
-              .setPositiveButtonListener(new OnClickListener() {
+
+              .setPositiveButtonListener("Positive", new OnClickListener() {
                  @Override
                  public void onClick(DialogFragment dialog, View view) {
                     Toast.makeText(MainActivity.this, "Positive Button Clicked", Toast.LENGTH_SHORT).show();
                  }
               })
-              .setNegativeButtonListener(new OnClickListener() {
+
+              .setNegativeButtonListener("Negative", new OnClickListener() {
                  @Override
                  public void onClick(DialogFragment dialog, View view) {
                     Toast.makeText(MainActivity.this, "Negative Button Clicked", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                  }
-              }).build();
+              })
+
+              .build();
+
 
       dialog.show(getSupportFragmentManager(), null);
+
    }
+
 }

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +20,7 @@ import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 public class ConfirmDialog extends DialogFragment {
 
@@ -45,12 +45,8 @@ public class ConfirmDialog extends DialogFragment {
    private int mIcon;
    private int mIconColor;
 
-   public ConfirmDialog() {
-   }
+   private ConfirmDialog() {
 
-   @Override
-   public void dismiss() {
-      super.dismiss();
    }
 
    @Override
@@ -60,20 +56,33 @@ public class ConfirmDialog extends DialogFragment {
       setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog);
    }
 
+
+   /**
+    * commented super method
+    * for fix bug -> IllegalStateException: Can not perform this action after onSaveInstanceState
+    */
+   @Override
+   public void onSaveInstanceState(@NonNull Bundle outState) {
+      //super.onSaveInstanceState(outState);
+   }
+
+
+   @Override
+   public void show(@NonNull FragmentManager manager, @Nullable String tag) {
+      try {
+         super.show(manager, tag);
+
+      } catch (IllegalStateException e) {
+         e.printStackTrace();
+      }
+
+   }
+
    @Nullable
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
       setBackgroundForDialog();
       return inflater.inflate(R.layout.confirm_dialog, container, false);
-   }
-
-   private void setBackgroundForDialog() {
-      Dialog dialog = getDialog();
-      if (dialog != null)
-         if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(dialog.getContext(), R.drawable.background_dialog));
-            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-         }
    }
 
    @Override
@@ -123,6 +132,9 @@ public class ConfirmDialog extends DialogFragment {
 
       //When positive color was equal to negative color
       mViewLine.setVisibility(mColorNegativeButton == mColorPositiveButton ? View.VISIBLE : View.GONE);
+
+      // when just need positive button
+      mButtonNegative.setVisibility(mNegativeButtonListener == null ? View.GONE : View.VISIBLE);
 
       //button text,s
       if (mTextPositiveButton != null) {
@@ -175,15 +187,15 @@ public class ConfirmDialog extends DialogFragment {
 
       //typeface
       if (mTypeface != null)
-         setTypeFace(mButtonPositive,mButtonNegative,mTextViewTitle,mTextViewMessageBody);
+         setTypeFace(mButtonPositive, mButtonNegative, mTextViewTitle, mTextViewMessageBody);
 
    }
 
    private void setTypeFace(View... views) {
-      for (View v: views) {
-         if (v instanceof Button){
+      for (View v : views) {
+         if (v instanceof Button) {
             ((Button) v).setTypeface(mTypeface);
-         }else if (v instanceof TextView){
+         } else if (v instanceof TextView) {
             ((TextView) v).setTypeface(mTypeface);
          }
       }
@@ -199,6 +211,14 @@ public class ConfirmDialog extends DialogFragment {
       mButtonNegative = mView.findViewById(R.id.confirm_dialog_button_negative);
    }
 
+   private void setBackgroundForDialog() {
+      Dialog dialog = getDialog();
+      if (dialog != null)
+         if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(dialog.getContext(), R.drawable.background_dialog));
+            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+         }
+   }
 
    public void setmMessage(String mMessage) {
       this.mMessage = mMessage;
@@ -214,6 +234,7 @@ public class ConfirmDialog extends DialogFragment {
 
 
    public static class Builder {
+      private Context mContext;
       private String mMessage;
       private String mMessageBody;
       private String mTextPositiveButton;
@@ -231,26 +252,18 @@ public class ConfirmDialog extends DialogFragment {
       private int mColorRippleNegativeButton;
 
 
-      public Builder(String message) {
+      public Builder(Context context, String message) {
+         this.mContext = context;
          this.mMessage = message;
       }
 
       public Builder(Context context, @StringRes int message) {
-         this.mMessage = context.getString(message);
+         this.mContext = context;
+         this.mMessage = mContext.getString(message);
       }
 
       public Builder setMessageBody(String messageBody) {
          this.mMessageBody = messageBody;
-         return this;
-      }
-
-      public Builder setTextPositiveButton(String textPositiveButton) {
-         this.mTextPositiveButton = textPositiveButton;
-         return this;
-      }
-
-      public Builder setTextNegativeButton(String textNegativeButton) {
-         this.mTextNegativeButton = textNegativeButton;
          return this;
       }
 
@@ -264,12 +277,26 @@ public class ConfirmDialog extends DialogFragment {
          return this;
       }
 
-      public Builder setPositiveButtonListener(OnClickListener positiveButtonListener) {
+      public Builder setPositiveButtonListener(String textPositiveButton, OnClickListener positiveButtonListener) {
+         this.mTextPositiveButton = textPositiveButton;
          this.mPositiveButtonListener = positiveButtonListener;
          return this;
       }
 
-      public Builder setNegativeButtonListener(OnClickListener negativeButtonListener) {
+      public Builder setPositiveButtonListener(@StringRes int textPositiveButton, OnClickListener positiveButtonListener) {
+         this.mTextPositiveButton = mContext.getResources().getString(textPositiveButton);
+         this.mPositiveButtonListener = positiveButtonListener;
+         return this;
+      }
+
+      public Builder setNegativeButtonListener(String textNegativeButton, OnClickListener negativeButtonListener) {
+         this.mTextNegativeButton = textNegativeButton;
+         this.mNegativeButtonListener = negativeButtonListener;
+         return this;
+      }
+
+      public Builder setNegativeButtonListener(@StringRes int textNegativeButton, OnClickListener negativeButtonListener) {
+         this.mTextNegativeButton = mContext.getResources().getString(textNegativeButton);
          this.mNegativeButtonListener = negativeButtonListener;
          return this;
       }
@@ -331,5 +358,6 @@ public class ConfirmDialog extends DialogFragment {
          return dialog;
       }
    }
+
 
 }
