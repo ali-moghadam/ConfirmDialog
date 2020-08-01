@@ -18,7 +18,7 @@ allprojects {
 #### Step 2. Add the dependency
 ```gradle	
 	dependencies {
-	         implementation 'com.github.alipapital:ConfirmDialog:1.0'
+	         implementation 'com.github.alipapital:ConfirmDialog:{version}'
 	}
 ```
 
@@ -27,8 +27,7 @@ allprojects {
 #### Step 3. Create Confirm Dialog
 
 ```java
-      ConfirmDialog dialog = new ConfirmDialog.Builder("Are you sure to delete item ?")
-              .setTextNegativeButton("Cancel")
+            ConfirmDialog dialog = new ConfirmDialog.Builder(this, "Are you sure to delete item ?")
               .setTypeface(Typeface.SANS_SERIF)
               .setColorPositiveButton(getResources().getColor(R.color.colorPrimary))
               .setColorNegativeButton(getResources().getColor(R.color.gray))
@@ -39,19 +38,21 @@ allprojects {
               .setIcon(R.drawable.ic_alert)
               .setIconColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
               .setMessageBody("For more information about this library, read the document in github.")
-              .setPositiveButtonListener(new OnClickListener() {
+              .setPositiveButtonListener("Positive", new OnClickListener() {
                  @Override
                  public void onClick(DialogFragment dialog, View view) {
                     Toast.makeText(MainActivity.this, "Positive Button Clicked", Toast.LENGTH_SHORT).show();
                  }
               })
-              .setNegativeButtonListener(new OnClickListener() {
+              .setNegativeButtonListener("Negative", new OnClickListener() {
                  @Override
                  public void onClick(DialogFragment dialog, View view) {
+                    Toast.makeText(MainActivity.this, "Negative Button Clicked", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                  }
-              }).build();
-
+              })
+              .build();
+      
       dialog.show(getSupportFragmentManager(), null);
 ```
            
